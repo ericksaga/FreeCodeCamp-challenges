@@ -1,0 +1,59 @@
+const romanNumbers = [{roman:'M', val:1000}, {roman:'D',val:500}, {roman:'C',val:100}, {roman:'L',val:50}, {roman:'X',val:10}, {roman:'V',val:5}, {roman:'I',val:1}];
+//converts into roman numbers from 1 to 3999
+function convertToRoman(num) {
+  let str = [];
+  let pot = 0;
+  while(num >= 1) {
+    //get a single number per power of 10
+    let n = num%10 * Math.pow(10,pot);
+    let rm = 0;
+    console.log(n);
+    if(n == 0) {
+      pot++;
+      num = parseInt(num/10);
+      continue;
+    }
+
+    for(let x in romanNumbers) {
+      if(parseInt(n/romanNumbers[x].val) > 0) {
+        rm = x;
+        break;
+      }
+    }
+    console.log(romanNumbers[rm]);
+    rm++;
+    rm--;
+    if(num%10 == 9) {
+      //starts with 9
+      console.log("start 9");
+      let q = romanNumbers[rm + 1].roman + romanNumbers[rm-1].roman;
+      str.unshift(q);
+    }
+    else if(parseInt(n/romanNumbers[rm].val) >= 4) {
+      //starts with 4
+      console.log("start 4");
+      let q = romanNumbers[rm].roman + romanNumbers[rm - 1].roman;
+      str.unshift(q);
+    }
+    else {
+      //any other case
+      console.log("start any");
+      let q = '';
+      while(n > 0) {
+        while(romanNumbers[rm].val > n)
+          rm++;
+        n -= romanNumbers[rm].val;
+        q += romanNumbers[rm].roman;
+        //console.log(n);
+      }
+      str.unshift(q);
+    }
+    //increment the power
+    pot++;
+    //delete last number
+    num = parseInt(num/10);
+  }
+  return str.join('');
+}
+
+console.log(convertToRoman(16));
