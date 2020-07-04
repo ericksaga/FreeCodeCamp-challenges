@@ -1,0 +1,17 @@
+function palindrome(str) {
+  let st;
+  st = str.replace(/[^\d^A-Z^a-z]/g,'').toLowerCase();
+  console.log(st);
+  let lmt = parseInt(st.length/2);
+  let r = true;
+  for(let x = 0; x < lmt; x++)
+  {
+    if(st[x] != st[st.length - x - 1])
+    {
+      r = false;
+    }
+  }
+  return r;
+}
+
+console.log(palindrome("My age is 0, 0 si ega ym."));
